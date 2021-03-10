@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <!-- 引入外部资源文件-->
+  <properties resource="jdbc.properties"/>
+
+  <!-- 配置数据源环境 -->
+  <environments default="development">
+    <environment id="development">
+      <!-- 数据库事务管理类型 -->
+      <transactionManager type="JDBC"/>
+      <!-- 数据源，type=pooled 说明是使用连接池方式，可以节省资源 -->
+      <dataSource type="POOLED">
+        <!-- 调用资源文件里的用户信息-->
+        <property name="driver" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+
+  <!-- 省略数据源配置-->
+  <mappers>
+    <!--配置文件-->
+    <mapper resource="BlogMapper.xml"/>
+    <!--配置文件-->
+    <mapper class="org.apache.ibatis.demo.mapper.BlogMapper2"/>
+  </mappers>
+</configuration>
