@@ -4,10 +4,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.apache.ibatis.demo.mapper.BlogMapper">
+<mapper namespace="org.apache.ibatis.demo.mapper.BlogMapperXml">
 
-  <select id="selectBlogById" resultType="org.apache.ibatis.demo.entity.Blog">
+
+  <select id="selectBlogByIdXml" resultType="org.apache.ibatis.demo.entity.Blog">
     select * from blog where id =#{id}
   </select>
+
 
 </mapper>

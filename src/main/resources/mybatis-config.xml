@@ -24,9 +24,13 @@
 
   <!-- 省略数据源配置-->
   <mappers>
-    <!--配置文件-->
+    <!-- 使用相对于类路径的资源引用 -->
     <mapper resource="BlogMapper.xml"/>
-    <!--配置文件-->
-    <mapper class="org.apache.ibatis.demo.mapper.BlogMapper2"/>
+    <!-- 使用映射器接口实现类的完全限定类名 -->
+    <mapper class="org.apache.ibatis.demo.mapper.BlogMapperInterface"/>
+    <!-- 使用完全限定资源定位符（URL） -->
+    <mapper url="file:///D:\code\sourceCode\mybatis-3\src\main\resources\BlogMapperFile.xml"></mapper>
+    <!-- 将包内的映射器接口实现全部注册为映射器 -->
+    <package name="org.apache.ibatis.demo.mapper2"/>
   </mappers>
 </configuration>

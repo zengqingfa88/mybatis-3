@@ -182,7 +182,7 @@ class SqlSessionTest extends BaseDataTest {
   @Test
   void shouldSelectCountOfPosts() {
     try (SqlSession session = sqlMapper.openSession()) {
-      Integer count = session.selectOne("org.apache.ibatis.domain.blog.mappers.BlogMapper.selectCountOfPosts");
+      Integer count = session.selectOne("org.apache.ibatis.domain.blog.mappers.BlogMapperXml.selectCountOfPosts");
       assertEquals(5, count.intValue());
     }
   }
@@ -190,8 +190,8 @@ class SqlSessionTest extends BaseDataTest {
   @Test
   void shouldEnsureThatBothEarlyAndLateResolutionOfNesteDiscriminatorsResolesToUseNestedResultSetHandler() {
       Configuration configuration = sqlMapper.getConfiguration();
-      assertTrue(configuration.getResultMap("org.apache.ibatis.domain.blog.mappers.BlogMapper.earlyNestedDiscriminatorPost").hasNestedResultMaps());
-      assertTrue(configuration.getResultMap("org.apache.ibatis.domain.blog.mappers.BlogMapper.lateNestedDiscriminatorPost").hasNestedResultMaps());
+      assertTrue(configuration.getResultMap("org.apache.ibatis.domain.blog.mappers.BlogMapperXml.earlyNestedDiscriminatorPost").hasNestedResultMaps());
+      assertTrue(configuration.getResultMap("org.apache.ibatis.domain.blog.mappers.BlogMapperXml.lateNestedDiscriminatorPost").hasNestedResultMaps());
   }
 
   @Test
@@ -325,7 +325,7 @@ class SqlSessionTest extends BaseDataTest {
   @Test
   void shouldSelectBlogWithPostsAndAuthorUsingSubSelects() {
     try (SqlSession session = sqlMapper.openSession()) {
-      Blog blog = session.selectOne("org.apache.ibatis.domain.blog.mappers.BlogMapper.selectBlogWithPostsUsingSubSelect", 1);
+      Blog blog = session.selectOne("org.apache.ibatis.domain.blog.mappers.BlogMapperXml.selectBlogWithPostsUsingSubSelect", 1);
       assertEquals("Jim Business", blog.getTitle());
       assertEquals(2, blog.getPosts().size());
       assertEquals("Corn nuts", blog.getPosts().get(0).getSubject());
@@ -337,7 +337,7 @@ class SqlSessionTest extends BaseDataTest {
   @Test
   void shouldSelectBlogWithPostsAndAuthorUsingSubSelectsLazily() {
     try (SqlSession session = sqlMapper.openSession()) {
-      Blog blog = session.selectOne("org.apache.ibatis.domain.blog.mappers.BlogMapper.selectBlogWithPostsUsingSubSelectLazily", 1);
+      Blog blog = session.selectOne("org.apache.ibatis.domain.blog.mappers.BlogMapperXml.selectBlogWithPostsUsingSubSelectLazily", 1);
       Assertions.assertTrue(blog instanceof Proxy);
       assertEquals("Jim Business", blog.getTitle());
       assertEquals(2, blog.getPosts().size());
@@ -350,7 +350,7 @@ class SqlSessionTest extends BaseDataTest {
   @Test
   void shouldSelectBlogWithPostsAndAuthorUsingJoin() {
     try (SqlSession session = sqlMapper.openSession()) {
-      Blog blog = session.selectOne("org.apache.ibatis.domain.blog.mappers.BlogMapper.selectBlogJoinedWithPostsAndAuthor", 1);
+      Blog blog = session.selectOne("org.apache.ibatis.domain.blog.mappers.BlogMapperXml.selectBlogJoinedWithPostsAndAuthor", 1);
       assertEquals("Jim Business", blog.getTitle());
 
       final Author author = blog.getAuthor();
@@ -424,13 +424,13 @@ class SqlSessionTest extends BaseDataTest {
     Configuration config = sqlMapper.getConfiguration();
     try {
       MappedStatement ms = new MappedStatement.Builder(config,
-          "org.apache.ibatis.domain.blog.mappers.BlogMapper.selectBlogWithPostsUsingSubSelect",
+          "org.apache.ibatis.domain.blog.mappers.BlogMapperXml.selectBlogWithPostsUsingSubSelect",
           Mockito.mock(SqlSource.class), SqlCommandType.SELECT)
               .resource("org/mybatis/TestMapper.xml").build();
       config.addMappedStatement(ms);
       fail("Expected exception to be thrown due to statement that already exists.");
     } catch (Exception e) {
-      assertTrue(e.getMessage().contains("already contains value for org.apache.ibatis.domain.blog.mappers.BlogMapper.selectBlogWithPostsUsingSubSelect. please check org/apache/ibatis/builder/BlogMapper.xml and org/mybatis/TestMapper.xml"));
+      assertTrue(e.getMessage().contains("already contains value for org.apache.ibatis.domain.blog.mappers.BlogMapperXml.selectBlogWithPostsUsingSubSelect. please check org/apache/ibatis/builder/BlogMapperXml.xml and org/mybatis/TestMapper.xml"));
     }
   }
 
@@ -673,7 +673,7 @@ class SqlSessionTest extends BaseDataTest {
   void shouldHandleZeroParameters() {
     try (SqlSession session = sqlMapper.openSession()) {
       final TestResultHandler resultHandler = new TestResultHandler();
-      session.select("org.apache.ibatis.domain.blog.mappers.BlogMapper.selectAllPosts", resultHandler);
+      session.select("org.apache.ibatis.domain.blog.mappers.BlogMapperXml.selectAllPosts", resultHandler);
       assertEquals(5, resultHandler.count);
     }
   }
@@ -691,7 +691,7 @@ class SqlSessionTest extends BaseDataTest {
   void shouldStopResultHandler() {
     try (SqlSession session = sqlMapper.openSession()) {
       final TestResultStopHandler resultHandler = new TestResultStopHandler();
-      session.select("org.apache.ibatis.domain.blog.mappers.BlogMapper.selectAllPosts", null, resultHandler);
+      session.select("org.apache.ibatis.domain.blog.mappers.BlogMapperXml.selectAllPosts", null, resultHandler);
       assertEquals(2, resultHandler.count);
     }
   }
